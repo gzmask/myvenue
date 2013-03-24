@@ -1,0 +1,182 @@
+<%= javascript_include_tag "prototype" %>
+<div class="sub_menu">
+<%= link_to 'Back', '/schedules/'+@event.schedule.id.to_s+'/edit' %>
+</div>
+<h1>Editing event</h1>
+
+<% form_for(@event) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :start_time %><br />
+    <%= f.time_select :start_time %>
+  </p>
+  <p>
+    <%= f.label :end_time %><br />
+    <%= f.time_select :end_time %>
+  </p>
+  <p>
+    <label>Start Date</label><br />
+    <%= f.date_select :effective_date %>
+  </p>
+  <p>
+    <label>End Date</label><br />
+    <%= f.date_select :defective_date %>
+  </p>
+  <script type="text/javascript">
+  function recurrence_hide(){
+	if ($('event_recurrence').selectedIndex == 0)
+	{
+	$('weekly_panel').hide();
+	$('weekly_panel_tb').hide();
+	$('monthly_panel').hide();
+	}
+	else if ($('event_recurrence').selectedIndex == 1)
+	{
+	$('weekly_panel').hide();
+	$('weekly_panel_tb').hide();
+	$('monthly_panel').hide();
+	}
+	else if ($('event_recurrence').selectedIndex == 2)
+	{
+	$('weekly_panel').show();
+	$('weekly_panel_tb').show();
+	$('monthly_panel').hide();
+	}
+	else if ($('event_recurrence').selectedIndex == 3)
+	{
+	$('weekly_panel').hide();
+	$('weekly_panel_tb').hide();
+	$('monthly_panel').show();
+	}
+  }
+  </script>
+  <p>
+    <%= f.label :recurrence %><br />
+    <%= f.select :recurrence, [['once',0],['daily',1],['weekly',2],['monthly',3]], {}, {:onchange => "recurrence_hide()"} %>
+  </p>
+  <script type="text/javascript">
+  function add_mon(){
+  $('event_weekly').value += "1,";
+  };
+  function remove_mon(){
+  $('event_weekly').value = $('event_weekly').value.replace("1,","");
+  };
+  function add_tue(){
+  $('event_weekly').value += "2,";
+  };
+  function remove_tue(){
+  $('event_weekly').value = $('event_weekly').value.replace("2,","");
+  };
+  function add_wed(){
+  $('event_weekly').value += "3,";
+  };
+  function remove_wed(){
+  $('event_weekly').value = $('event_weekly').value.replace("3,","");
+  };
+  function add_thu(){
+  $('event_weekly').value += "4,";
+  };
+  function remove_thu(){
+  $('event_weekly').value = $('event_weekly').value.replace("4,","");
+  };
+  function add_fri(){
+  $('event_weekly').value += "5,";
+  };
+  function remove_fri(){
+  $('event_weekly').value = $('event_weekly').value.replace("5,","");
+  };
+  function add_sat(){
+  $('event_weekly').value += "6,";
+  };
+  function remove_sat(){
+  $('event_weekly').value = $('event_weekly').value.replace("6,","");
+  };
+  function add_sun(){
+  $('event_weekly').value += "0,";
+  };
+  function remove_sun(){
+  $('event_weekly').value = $('event_weekly').value.replace("0,","");
+  };
+  </script>
+  <p id = "weekly_panel" style=" display:<%='none' if @event.recurrence == 0 || @event.recurrence == 1 || @event.recurrence == 3 %>" >
+    <%= f.label :weekly, 'Choose week days' %><br />
+    <%= f.hidden_field :weekly %>
+    <table id = "weekly_panel_tb" style=" width:583px; display:<%='none' if @event.recurrence == 0 || @event.recurrence == 1 || @event.recurrence == 3 %>;">
+    <tr><th>Monday</th><th>Tuesday</th><th>Wednesday</th><th>Thursday</th><th>Friday</th><th>Saturday</th><th>Sunday</th></tr>
+    <tr>
+    <td><input id="monday" type="checkBox" onclick="if (this.checked) {add_mon()} else {remove_mon()}"></td>
+    <td><input id="tuesday" type="checkBox" onclick="if (this.checked) {add_tue()} else {remove_tue()}"></td>
+    <td><input id="wednesday" type="checkBox" onclick="if (this.checked) {add_wed()} else {remove_wed()}"></td>
+    <td><input id="thursday" type="checkBox" onclick="if (this.checked) {add_thu()} else {remove_thu()}"></td>
+    <td><input id="friday" type="checkBox" onclick="if (this.checked) {add_fri()} else {remove_fri()}"></td>
+    <td><input id="saturday" type="checkBox" onclick="if (this.checked) {add_sat()} else {remove_sat()}"></td>
+    <td><input id="sunday" type="checkBox" onclick="if (this.checked) {add_sun()} else {remove_sun()}"></td></tr>
+    </table>
+<script type="text/javascript">
+  <% /,?1,?/ =~ @event.weekly %>
+  <% if $& != nil %>
+    document.getElementById("monday").checked = true;
+  <% end %>
+  <% /,?2,?/ =~ @event.weekly %>
+  <% if $& != nil %>
+    document.getElementById("tuesday").checked = true;
+  <% end %>
+  <% /,?3,?/ =~ @event.weekly %>
+  <% if $& != nil %>
+    document.getElementById("wednesday").checked = true;
+  <% end %>
+  <% /,?4,?/ =~ @event.weekly %>
+  <% if $& != nil %>
+    document.getElementById("thursday").checked = true;
+  <% end %>
+  <% /,?5,?/ =~ @event.weekly %>
+  <% if $& != nil %>
+    document.getElementById("friday").checked = true;
+  <% end %>
+  <% /,?6,?/ =~ @event.weekly %>
+  <% if $& != nil %>
+    document.getElementById("saturday").checked = true;
+  <% end %>
+  <% /,?0,?/ =~ @event.weekly %>
+  <% if $& != nil %>
+    document.getElementById("sunday").checked = true;
+  <% end %>
+</script>
+  </p>
+  <p id = "monthly_panel" style="display:<%='none' if @event.recurrence == 0 || @event.recurrence == 1 || @event.recurrence == 2 %>">
+    <%= f.label :monthly, 'Month days' %><br />
+    <%= f.text_field :monthly %>(1 as 1st, 31 as 31st, sperated by "," e.g "1,31," means 1st and 31st)
+  </p>
+  <!--p>
+    <%= f.label :is_confirmed %><br />
+    <%= f.check_box :is_confirmed %>
+  </p-->
+  <p>
+    <%= f.label :entry_time, 'Show the event start time:' %><br />
+    <%= f.check_box :entry_time %>
+  </p>
+ 
+  <p>
+    <%= f.label :entry_time, 'Show the event end time:' %><br />
+    <%= f.check_box :entry_end_time %>
+  </p>
+
+  <p>
+    <%= f.label :entry_time, 'Show bullets:' %><br />
+    <%= f.check_box :entry_bullets %>
+  </p>
+
+ <p>
+    <%= f.label :schedule_id %><br />
+    <%= f.text_field :schedule_id, :disabled => 'disabled' %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+

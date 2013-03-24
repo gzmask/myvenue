@@ -1,0 +1,132 @@
+<% form_for(@venue, :html => {:multipart => true}) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :weather_code, 'weather.ca code:(Regina CASK0261)' %><br />
+    <%= f.text_field :weather_code %>
+  </p>
+  <p>
+    <%= f.label :time_zone %><br />
+    <select name="venue[time_zone]" id="venue_time_zone">
+      <option value="-7" <%= "selected='selected'" if @venue.time_zone == -7 %>>Alberta</option>
+      <option value="-8" <%= "selected='selected'" if @venue.time_zone == -8 %>>British Columbia</option>
+      <option value="-6" <%= "selected='selected'" if @venue.time_zone == -6 %>>Manitoba</option>
+      <option value="-4" <%= "selected='selected'" if @venue.time_zone == -4 %>>New Brunswick</option>
+      <option value="-4" <%= "selected='selected'" if @venue.time_zone == -4 %>>Newfoundland</option>
+      <option value="-7" <%= "selected='selected'" if @venue.time_zone == -7 %>>Northwest Territories</option>
+      <option value="-4" <%= "selected='selected'" if @venue.time_zone == -4 %>>Nova Scotia</option>
+      <option value="-5" <%= "selected='selected'" if @venue.time_zone == -5 %>>Nunavut</option>
+      <option value="-5" <%= "selected='selected'" if @venue.time_zone == -5 %>>Ontario</option>
+      <option value="-4" <%= "selected='selected'" if @venue.time_zone == -4 %>>Prince Edward Island</option>
+      <option value="-5" <%= "selected='selected'" if @venue.time_zone == -5 %>>Quebec</option>
+      <option value="-6" <%= "selected='selected'" if @venue.time_zone == -6 %>>Saskatchewan</option>
+      <option value="-8" <%= "selected='selected'" if @venue.time_zone == -8 %>>Yukon</option>
+    </select>
+  </p>
+  <p>
+    <%= f.label :time_interval %><br />
+    <%= f.text_field :time_interval %>
+  </p>
+  <p>
+    <%= f.label :background_image %><br />
+    <%= f.file_field :background_image %>
+  </p>
+  <p>
+    <%= f.label :user_id, 'Owner Client' %><br />
+    <% # f.text_field :user_id, {'value' => session[:user_id].to_s, 'disabled' => 'disabled'} %>
+    <%#= select("venue", "user_id", @users.collect {|p| [p.name, p.id]}, {:default => session[:user_id]} ) %>
+  <%= select("venue", "user_id", User.all.collect {|p| [p.name, p.id]}, {:default => session[:user_id]} ) %>
+ </p>
+
+  <h2>Display:</h2>
+  <% f.fields_for :display do |display_form| %>
+    <p>
+      <%= display_form.label :name, 'Display name:' %>
+      <%= display_form.text_field :name %>
+    </p>
+    <p>
+      <%= display_form.label :is_show, 'Check if you want display name show:' %>
+      <%= display_form.check_box :is_show %>
+    </p>
+    <p>
+      <%= display_form.label :width, 'Display horizontal length in pixels:' %><br />
+      <%= display_form.text_field :width, :default => 1024 %>px
+    </p>
+    <p>
+      <%= display_form.label :height, 'Display vertial length in pixels:' %><br />
+      <%= display_form.text_field :height, :default => 768 %>px
+    </p>
+    <!--p>
+      <%= display_form.label :is_customize %>
+      <%= display_form.check_box :is_customize %>
+    </p>
+    <p>
+      <%= display_form.label :html %><br />
+      <%= display_form.text_area :html %>
+    </p>
+    <p>
+      <%= display_form.label :css %><br />
+      <%= display_form.text_area :css %>
+    </p-->
+    <% unless display_form.object.nil? || display_form.object.new_record? %>
+      <!--p>
+        <%= display_form.label :_delete, 'Remove:' %>
+        <%= display_form.check_box :_delete %>
+      </p-->
+    <% end %>
+  <% end %>
+
+  <h2>Time Box:</h2>
+  <% f.fields_for :time_box do |time_box_form| %>
+    <p>
+      <%= time_box_form.label :top, 'distance to the top(in pixel)' %><br />
+      <%= time_box_form.text_field :top %>
+    </p>
+    <p>
+      <%= time_box_form.label :left, 'distance to the left(in pixel)' %><br />
+      <%= time_box_form.text_field :left %>
+    </p>
+    <p>
+      <%= time_box_form.label :font_size %>(in pixel)<br />
+      <%= time_box_form.text_field :font_size %>
+    </p>
+    <p>
+      <%= time_box_form.label :font_color %>(#000000)<br />
+      <%= time_box_form.text_field :font_color %>
+    </p>
+    <p>
+      <%= time_box_form.label :is_show %><br />
+      <%= time_box_form.check_box :is_show %>
+    </p>
+
+  <% end %>
+
+  <h2>Weather Box:</h2>
+  <% f.fields_for :weather_box do |weather_box_form| %>
+    <p>
+      <%= weather_box_form.label :top, 'distance to the top(in pixel)' %><br />
+      <%= weather_box_form.text_field :top %>
+    </p>
+    <p>
+      <%= weather_box_form.label :left, 'distance to the left(in pixel)' %><br />
+      <%= weather_box_form.text_field :left %>
+    </p>
+   <p>
+      <%= weather_box_form.label :is_show %><br />
+      <%= weather_box_form.check_box :is_show %>
+    </p>
+  <% end %>
+ 
+  <h2>Twitter:</h2>
+   Source: <%= f.text_field :twitter %>  
+  
+
+  <p>
+    <%= f.submit 'Submit' %>
+  </p>
+<% end %>
+

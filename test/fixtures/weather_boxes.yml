@@ -1,0 +1,19 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  city_code: MyString
+  top: 1
+  left: 1
+  width: 1
+  is_show: false
+  venue_id: 1
+
+two:
+  name: MyString
+  city_code: MyString
+  top: 1
+  left: 1
+  width: 1
+  is_show: false
+  venue_id: 1

@@ -1,0 +1,30 @@
+<h1>Listing splash_ads</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Image file</th>
+    <th>Time interval</th>
+    <th>Width</th>
+    <th>Height</th>
+    <th>Venue</th>
+  </tr>
+
+<% @splash_ads.each do |splash_ad| %>
+  <tr>
+    <td><%=h splash_ad.name %></td>
+    <td><%=h splash_ad.image_file %></td>
+    <td><%=h splash_ad.time_interval %></td>
+    <td><%=h splash_ad.width %></td>
+    <td><%=h splash_ad.height %></td>
+    <td><%=h splash_ad.venue_id %></td>
+    <td><%= link_to 'Show', splash_ad %></td>
+    <td><%= link_to 'Edit', edit_splash_ad_path(splash_ad) %></td>
+    <td><%= link_to 'Destroy', splash_ad, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'Back to your venues', venues_path %>

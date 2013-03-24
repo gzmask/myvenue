@@ -1,0 +1,59 @@
+
+<div class="sub_menu">
+<%= link_to 'Back', '/venues/'+params[:venue_id].to_s %>
+</div>
+
+<h1>New splash_ad</h1>
+<% form_for(@splash_ad, :html => { :multipart => 'true' }) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :image_file %><br />
+    <%= f.file_field :image_file %>
+  </p>
+  <p>
+    <%= f.label :time_interval %> (Seconds)<br />
+    <%= f.text_field :time_interval %>
+  </p>
+  <p>
+    <%= f.label :width %> (Pixels)<br />
+    <%= f.text_field :width, :default => 1024 %>
+  </p>
+  <p>
+    <%= f.label :height %> (Pixels)<br />
+    <%= f.text_field :height, :default => 768 %>
+  </p>
+  <!--p>
+    <%= f.label :playlist_start %><br />
+    <%= f.text_field :playlist_start %>
+  </p>
+   <p>
+    <%= f.label :playlist_end %><br />
+    <%= f.text_field :playlist_end %>
+  </p-->
+  <p>
+    <%= hidden_field_tag(:venue_id, params[:venue_id].to_s) %>
+  </p>
+  <p>
+    <%= f.label :playlist_start %><br />
+    <%= f.text_field :playlist_start, :id=>"date1", :class=>"date-pick" %>
+  </p>
+  <p>
+    <%= f.label :playlist_end %><br />
+    <%= f.text_field :playlist_end, :id=>"date2", :class=>"date-pick" %>
+  </p>
+
+
+    <!--li>Date 1:<input name="date1" id="date1" class="date-pick" /></li>
+    <li>Date 2:<input name="date2" id="date2" class="date-pick" /></li-->
+
+
+  <p>
+    <%= f.submit 'Submit' %>
+  </p>
+<% end %>
+

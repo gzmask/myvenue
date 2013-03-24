@@ -1,0 +1,50 @@
+
+<div class="sub_menu">
+<%= link_to 'Edit', edit_event_path(@event) %> <%= link_to 'Back', '/schedules/'+@event.schedule.id.to_s+'/edit' %>
+</div>
+<p>
+  <b>Name:</b>
+  <%=h @event.name %>
+</p>
+
+<p>
+  <b>Start time:</b>
+  <%=h @event.effective_date.strftime(" %A %B-%d-%Y ") %> <%=h @event.start_time.strftime(" %I:%M %p") %>
+</p>
+
+<p>
+  <b>End time:</b>
+  <%=h @event.defective_date.strftime(" %A %B-%d-%Y ")%> <%=h @event.end_time.strftime(" %I:%M %p")%>
+</p>
+
+<p>
+  <b>Recurrence:</b>
+  <%=h @event.recurrence %>
+</p>
+
+<p>
+  <b>Is confirmed:</b>
+  <%=h @event.is_confirmed %>
+</p>
+
+<p>
+  <b>Entry time:</b>
+  <%=h @event.entry_time %>
+</p>
+
+<p>
+  <b>Entry end time:</b>
+  <%=h @event.entry_end_time %>
+</p>
+
+<p>
+  <b>Entry bullets:</b>
+  <%=h @event.entry_bullets %>
+</p>
+
+<p>
+  <b>Schedule:</b>
+  <%=h @event.schedule_id %>
+</p>
+
+

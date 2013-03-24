@@ -1,0 +1,20 @@
+<html>
+<head>
+<script src="/javascripts/swfobject.js" type="text/javascript"></script>
+</head>
+<body leftmargin="0" topmargin="0">
+<div id="smart-banner">
+  <!-- this appears if user doesn't have JavaScript enabled, or doesn't have the required Flash Player version -->
+  Place your flash alternative materials here. </div>
+<script type="text/javascript">
+	// <![CDATA[
+        var XMLpath = "/displays/<%= @display.id.to_s %>/";
+	var so = new SWFObject("/javascripts/flashRotator.swf", "myMovie", "249", "549", "8", "#000000");  <!-- If you change the canvas size of your flash piece in the FLA file you'll need to change the dimension of the flash piece here too -->
+	so.addVariable("XMLpath", "banner"); 
+	so.write("smart-banner");
+
+	// ]]>
+</script>
+
+</body>
+</html>

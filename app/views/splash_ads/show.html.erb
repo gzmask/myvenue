@@ -1,0 +1,44 @@
+<p>
+  <b>Name:</b>
+  <%=h @splash_ad.name %>
+</p>
+
+<p>
+  <b>Image file:</b>
+  <%=h @splash_ad.image_file %>
+</p>
+
+<p>
+  <b>Time interval:</b>
+  <%=h @splash_ad.time_interval %>
+</p>
+
+<p>
+  <b>Width:</b>
+  <%=h @splash_ad.width %>
+</p>
+
+<p>
+  <b>Height:</b>
+  <%=h @splash_ad.height %>
+</p>
+
+<p>
+  <b>Playlist start:</b>
+  <%=h @splash_ad.playlist_start %>
+</p>
+
+<p>
+  <b>Playlist end:</b>
+  <%=h @splash_ad.playlist_end %>
+</p>
+
+
+<p>
+  <b>Belongs to venue:</b>
+  <%=h @splash_ad.venue.name if @splash_ad.venue != nil %>
+</p>
+
+
+<%= link_to 'Edit', edit_splash_ad_path(@splash_ad) %> |
+<%= link_to 'Back', '/venues/'+@splash_ad.venue_id.to_s %>

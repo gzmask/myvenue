@@ -1,0 +1,35 @@
+<h1>Listing venues</h1>
+
+<% if session[:user_id] != nil %>
+  <table class="display_tb">
+    <tr>
+      <th>Name</th>
+      <th>Ownership</th>
+    </tr>
+  <% @venues.each do |venue| %>
+    <tr>
+      <td>
+          <%= link_to image_tag("/images/page.png", :border=>0)+'<span class="title">'+venue.name+'</span>', venue %></td>
+      <td><%=h User.find(venue.user_id).name %></td>
+      <td class="preview_control"><%= link_to 'Preview', venue.display %>
+          <%#= link_to 'Preview', venue.display %></td>
+ <% if User.find(session[:user_id]).is_admin %>
+     <td class="edit_control"><%= link_to 'Edit', edit_venue_path(venue) %></td>
+ <% end %>
+<% if User.find(session[:user_id]).is_admin %>
+      <td class="del_control"><%= link_to image_tag("/images/remove.png", :border =>0), venue, :confirm => 'Are you sure?', :method => :delete %><%#= link_to 'Destroy', venue, :confirm => 'Are you sure?', :method => :delete %></td>
+<% else %>
+      <td></td>
+<% end %>
+    </tr>
+  <% end %>
+  </table>
+
+  <br />
+  <% if User.find(session[:user_id]).is_admin %>
+  <%= link_to image_tag("/images/add.png", :border =>0), new_venue_path %>
+  <%#= link_to 'New venue', new_venue_path %> 
+   <% end %>
+<% else %> 
+  <div style="color:red;">Please <a href="/login">login</a> to see</div>
+<% end %>

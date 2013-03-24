@@ -1,0 +1,43 @@
+<p>
+  <b>Name:</b>
+  <%=h @time_box.name %>
+</p>
+
+<p>
+  <b>Time zone:</b>
+  <%=h @time_box.time_zone %>
+</p>
+
+<p>
+  <b>Top:</b>
+  <%=h @time_box.top %>
+</p>
+
+<p>
+  <b>Left:</b>
+  <%=h @time_box.left %>
+</p>
+
+<p>
+  <b>Font size:</b>
+  <%=h @time_box.font_size %>
+</p>
+
+<p>
+  <b>Font color:</b>
+  <%=h @time_box.font_color %>
+</p>
+
+<p>
+  <b>Venue:</b>
+  <%=h @time_box.venue_id %>
+</p>
+
+<p>
+  <b>Is show:</b>
+  <%=h @time_box.is_show %>
+</p>
+
+
+<%= link_to 'Edit', edit_time_box_path(@time_box) %> |
+<%= link_to 'Back', time_boxes_path %>

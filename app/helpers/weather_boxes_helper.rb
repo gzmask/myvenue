@@ -1,0 +1,2 @@
+module WeatherBoxesHelper
+end

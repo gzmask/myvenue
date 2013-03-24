@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Banners>
+<% @display.venue.advertisements.each do |advertisement| %>
+
+<% if (not advertisement.playlist_begin.nil?) && ( not advertisement.playlist_begin.empty?)%>
+<% datebegin = Date.strptime(advertisement.playlist_begin, "%d/%m/%Y")%>
+<% else %>
+<% datebegin = Date.strptime("1/1/1990", "%d/%m/%Y")%>
+<% end %>
+
+<% if (not advertisement.playlist_finish.nil?) && ( not advertisement.playlist_finish.empty?) %>
+<% datefinish = Date.strptime(advertisement.playlist_finish, "%d/%m/%Y") %>
+<% else %>
+<% datefinish = Date.strptime("1/1/1990", "%d/%m/%Y") %>
+<% end %>
+
+<% if (Date.today >= datebegin) && (Date.today <= datefinish) %>
+<Banner>
+  <Source>/advertisements/<%= advertisement.id.to_s %>/<%= advertisement.flash_file %></Source>
+  <TimeDelay><%= advertisement.time_interval %></TimeDelay>	
+</Banner>
+<% end %>
+<% end %>
+</Banners>

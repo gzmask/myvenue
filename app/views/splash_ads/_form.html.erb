@@ -1,0 +1,32 @@
+<% form_for(@splash_ad) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :time_interval %> (Seconds)<br />
+    <%= f.text_field :time_interval %>
+  </p>
+  <p>
+    <%= f.label :width %> (pixels)<br />
+    <%= f.text_field :width %>
+  </p>
+  <p>
+    <%= f.label :height %> (pixels)<br />
+    <%= f.text_field :height %>
+  </p>
+  <p>
+    <%= f.label :playlist_start %><br />
+    <%= f.text_field :playlist_start, :id=>"date1", :class=>"date-pick" %>
+  </p>
+  <p>
+    <%= f.label :playlist_end %><br />
+    <%= f.text_field :playlist_end, :id=>"date2", :class=>"date-pick" %>
+  </p>
+  <p>
+    <%= f.submit 'Submit' %>
+  </p>
+<% end %>
+

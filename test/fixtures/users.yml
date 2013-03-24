@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  venue_id: 1
+  password: MyString
+  is_client: false
+  is_admin: false
+  is_developer: false
+
+two:
+  name: MyString
+  venue_id: 1
+  password: MyString
+  is_client: false
+  is_admin: false
+  is_developer: false

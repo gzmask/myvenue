@@ -1,0 +1,32 @@
+<h1>Listing weather_boxes</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>City code</th>
+    <th>Top</th>
+    <th>Left</th>
+    <th>Width</th>
+    <th>Is show</th>
+    <th>Venue</th>
+  </tr>
+
+<% @weather_boxes.each do |weather_box| %>
+  <tr>
+    <td><%=h weather_box.name %></td>
+    <td><%=h weather_box.city_code %></td>
+    <td><%=h weather_box.top %></td>
+    <td><%=h weather_box.left %></td>
+    <td><%=h weather_box.width %></td>
+    <td><%=h weather_box.is_show %></td>
+    <td><%=h weather_box.venue_id %></td>
+    <td><%= link_to 'Show', weather_box %></td>
+    <td><%= link_to 'Edit', edit_weather_box_path(weather_box) %></td>
+    <td><%= link_to 'Destroy', weather_box, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New weather_box', new_weather_box_path %>

@@ -1,0 +1,44 @@
+<h1>Editing time_box</h1>
+
+<% form_for(@time_box) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :time_zone %><br />
+    <%= f.text_field :time_zone %>
+  </p>
+  <p>
+    <%= f.label :top %><br />
+    <%= f.text_field :top %>
+  </p>
+  <p>
+    <%= f.label :left %><br />
+    <%= f.text_field :left %>
+  </p>
+  <p>
+    <%= f.label :font_size %><br />
+    <%= f.text_field :font_size %>
+  </p>
+  <p>
+    <%= f.label :font_color %><br />
+    <%= f.text_field :font_color %>
+  </p>
+  <p>
+    <%= f.label :venue_id %><br />
+    <%= f.text_field :venue_id %>
+  </p>
+  <p>
+    <%= f.label :is_show %><br />
+    <%= f.check_box :is_show %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @time_box %> |
+<%= link_to 'Back', time_boxes_path %>

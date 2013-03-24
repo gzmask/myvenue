@@ -1,0 +1,19 @@
+<h1>Login:</h1>
+<% if session[:user_id] == nil %>
+<form action="/sessions/create" method="post">
+  <table style="color: #fff; width: 365px">
+  <tr>
+  <td>User name:</td><td><input type="text" name="user[name]" /></td>
+  </tr>
+  <tr>
+  <td>Password:</td><td><input type="password" name="user[password]" /></td>
+  </tr>
+  <tr>
+  <td><input type="submit" value="login" /></td><td></td>
+  </tr>
+  </table>
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token%>" />
+</form>
+<% else %>
+<a href="/sessions/destroy">Log out</a>
+<% end %>

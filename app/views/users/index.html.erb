@@ -1,0 +1,29 @@
+<h1>Listing users</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Is client</th>
+    <th>Is admin</th>
+    <th>Is developer</th>
+  </tr>
+
+<% @users.each do |user| %>
+  <tr>
+    <td><%=h user.name %></td>
+    <td><%=h user.is_client %></td>
+    <td><%=h user.is_admin %></td>
+    <td><%=h user.is_developer %></td>
+<% if User.find(session[:user_id]).is_admin %>
+    <td class="edit_control"><%= link_to 'Edit', edit_user_path(user) %></td>
+    <td class="del_crontl"><%= link_to 'Delete', user, :confirm => 'Are you sure?', :method => :delete %></td>
+<% end %>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<% if User.find(session[:user_id]).is_admin %>
+<%= link_to 'New user', new_user_path %>
+<% end %>

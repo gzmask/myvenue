@@ -1,0 +1,34 @@
+<h1>Listing events</h1>
+<%= @syshour.to_s%>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Start time</th>
+    <th>End time</th>
+    <th>Is confirmed</th>
+    <th>Entry time</th>
+    <th>Entry End Time </th>
+    <th>Entry Bullets</th>
+    <th>Schedule</th>
+  </tr>
+
+<% @events.each do |event| %>
+  <tr>
+    <td><%=h event.name %></td>
+    <td><%=h event.start_time %></td>
+    <td><%=h event.end_time %></td>
+    <td><%=h event.is_confirmed %></td>
+    <td><%=h event.entry_time %></td>
+    <td><%=h event.entry_end_time %></td>
+    <td><%=h event.entry_bullets %></td>
+    <td><%=h event.schedule_id %></td>
+    <td><%= link_to 'Show', event %></td>
+    <td><%= link_to 'Edit', edit_event_path(event) %></td>
+    <td><%= link_to 'Destroy', event, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New event', new_event_path %>

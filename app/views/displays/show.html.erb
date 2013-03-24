@@ -1,0 +1,427 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>Displays: <%= @display.name %></title>
+  <%= javascript_include_tag 'prototype' %>
+
+
+  <link rel="stylesheet" href="/distyle.css" type="text/css" />
+
+  <style type="text/css"> 
+    html { margin:0px; padding:0px; }
+    body { margin:0px; background-color:#CCCCCC; font-family:Arial, Helvetica, sans-serif; font-weight:bold; overflow: hidden; } 
+    #splash { height: 200%; width: 100%; background-color: #fff;margin-bottom:1000px; display:none;  }
+    #display_title { margin-left:10px; padding-top:20px; }
+    #display_title h1 { font-size:26px; color:#333333; }
+    #flashAdd 
+    { 
+    float:right; 
+    <% if @display.is_show %>
+    margin-top: <%=(-46 + @display.top).to_s if @display.top != nil %>px; 
+    <% else %>
+    margin-top: <%=(20 + @display.top).to_s if @display.top != nil %>px; 
+    <% end %>
+    margin-right:<%=(27 - @display.left).to_s if @display.left != nil %>px;   
+    }
+    table { border-collapse:collapse;  }
+    .time_td { border-right:solid 1px #000000; width:70px; }
+
+    #wrapper { background:url('/venues/<%= @display.venue.id.to_s %>/<%= @display.venue.background_image %>'); background-repeat:no-repeat; margin:0px; width:<%= @display.width %>px; height:<%= @display.height %>px; }
+    #clock 
+    { position:absolute; 
+      top:<%= @display.venue.time_box.top %>px; 
+      left:<%= @display.venue.time_box.left %>px;  
+      width:300px;  
+      font-size:<%= @display.venue.time_box.font_size %>px; 
+      color:<%= @display.venue.time_box.font_color %>; 
+      <% unless @display.venue.time_box.is_show %>
+      display: none;
+      <% end %>
+    }
+    #weather { position:absolute; background-color: transparent; top:<%= @display.venue.weather_box.top %>px; left:<%= @display.venue.weather_box.left %>px;  }
+
+ #weather a:link, a:visited, a:active { text-decoration:none; color:#003876; }
+ #weather a:hover { text-decoration:none; color:#2981da; }
+ #weather a#nochange:hover { color:#003876; }
+ #weather img { border: none; }
+#toprow { height: 58px; }
+
+#container {
+	color:#003876;
+	width:232px; min-height: 58px;
+	border: solid 1px #bfbfbf;
+	background: transparent url('http://btn.weather.ca/weatherbuttons/234x60/swirl.gif') no-repeat;
+  	margin-left:10px;
+}
+#left_col {	float:left; width: 65px; margin: 0px 4px 0px 0px; }
+	#logo { padding: 3px 0px 4px 2px;}
+	#btn_forecast { padding: 0px 0px 0px 2px;}
+#right_col { float:left; width:156px; margin: 0px 0px 0px 0px; }
+	#location { font:bold 13px "Century Gothic", Arial, Helvetica, sans-serif; }
+	#icon { float: left; width: 45px; }
+		#icon img { width: 45px; }
+	#temp {
+		float: left; padding: 5px 0px 0px 2px; width: auto;
+		font:21px "Century Gothic", Arial, Helvetica, sans-serif;
+	}
+		#temp sup { font-size: 15px; }
+	#cond {
+		float:left;
+		width:60px;
+		font:11px Arial, Helvetica, sans-serif; line-height: 12px;
+		padding:3px 0px 0px 5px;
+		margin-top:-40px;
+ 		margin-left:100px;
+	}
+
+.bullet ul
+{
+   float:left;
+   width: 10px;
+   margin:0px;
+   osition:relative;
+   height: 10px;
+}
+
+.bullet
+{
+  vertical-align:middle; 
+  height:10px;
+  float: left;
+  margin-top: 0px;
+}
+
+
+#bottom_row { clear: both; width:232px; overflow: auto; }
+	#ddmenu { float: left; width: 82px; padding: 4px 8px 2px 2px; }
+	#searchfld { float: left; width: 74px; padding: 4px 0px 2px; }
+		input.button, select.button {
+			border: #6c6c6c 1px solid;
+			font: 10px arial, helvetica, sans-serif;
+			vertical-align: middle;
+			letter-spacing: 1px; height: 16px; padding: 0px 0px 0px 2px;
+		}
+		input.button { width: 70px; }
+		select.button { width: 82px; }
+	#btn_search { float: left; width: 50px; padding: 4px 0px 0px; }
+		input.searchButton {
+			background: transparent url('http://btn.weather.ca/weatherbuttons/234x60/search_en.gif') no-repeat;
+			width: 50px; height: 16px;
+			border: none;
+			vertical-align: middle;
+		}
+		input.searchButton_fr {
+			background: transparent url('http://btn.weather.ca/weatherbuttons/234x60/search_fr.gif') no-repeat;
+			width: 50px; height: 16px;
+			border: none;
+			vertical-align: middle;
+		}
+.fl { float: left; }
+
+    #scheduleContainer { width:715px; margin-top:50px; float:left; padding-left:0px; border: 0px; }
+<% @display.venue.schedules.each do |schedule| %>
+    .scheduleBox<%= schedule.id.to_s %> { position:absolute; font-size:<%= schedule.title_font_size if schedule.title_font_size != nil %>px; text-align:left; width:<%= schedule.width.to_s %>px; height:<%= schedule.height.to_s %>px; border:solid <% if(schedule.is_border) %> 1px <% else %> 0px <%end%> #000000; float:left; left:<%= schedule.left.to_s %>px;top:<%= schedule.top.to_s %>px; word-break:break-all; overflow: hidden; }
+    .scheduleBox<%= schedule.id.to_s %> td { color:<%= schedule.content_color %>; background-color:<%= schedule.content_back_color %>; overflow: hidden; vertical-align:top; padding:3px; font-size:<%= schedule.content_font_size if schedule.content_font_size != nil %>px; }
+    .scheduleBox<%= schedule.id.to_s %> th { background-color:<%= schedule.title_back_color %>; overflow: hidden; font-size:18px;padding:3px; text-align:left; color:<%= schedule.title_color %>; font-size:<%= schedule.title_font_size if schedule.title_font_size != nil %>px; }
+<% end %>
+
+
+  </style>
+  <script type="text/javascript">  
+    function runUpdateSchedules() {
+	    
+	    var currentTime = new Date();
+
+	    var timeStamp = currentTime.getTime();
+	    
+	    <% @display.venue.schedules.each do |schedule| %>
+	    var this_url = "/schedules/<%= schedule.id.to_s %>/events.json";
+	    new Ajax.Request(this_url,   
+	    {
+		    method:'post',     
+		    onSuccess: function(transport){
+			var events = transport.responseText.evalJSON(true);  
+			var eventTableRowHTML = "<table cellspacing='0'width='100%'><tbody><tr><th colspan=\"4\"><%= schedule.name %></th></tr><tr><td colspan=\"4\"> <table>";
+
+
+
+			for(var i = 0; i < events.length; i++) {
+      /*                  if (events[i].event.entry_time)
+			{ var eventTableRowHTML = eventTableRowHTML + "<tr><td>Start Time</td>";}
+			else
+			{ var eventTableRowHTML = eventTableRowHTML + "<td></td>"; }
+
+			if (events[i].event.entry_end_time)
+			{ var eventTableRowHTML = eventTableRowHTML + "<td>End Time</td>";}
+			else
+			{ var eventTableRowHTML = eventTableRowHTML + "<td></td>"; }
+
+			var eventTableRowHTML = eventTableRowHTML + "<td>Event</td></tr>";
+*/
+	                if (events[i].event.entry_time)
+			{ var eventTableRowHTML = eventTableRowHTML + "<tr><td>"+adjustHours(events[i].event.start_time.slice(11,16));}
+			else
+			{ var eventTableRowHTML = eventTableRowHTML + " "; }
+
+			if (events[i].event.entry_end_time)
+			{ var eventTableRowHTML = eventTableRowHTML + "-"+adjustHours(events[i].event.end_time.slice(11,16));}
+			else
+			{ var eventTableRowHTML = eventTableRowHTML + " "; }
+
+			if (events[i].event.entry_bullets && !events[i].event.entry_time && !events[i].event.entry_end_time)
+			//if (events[i].event.entry_bullets)
+			{ var eventTableRowHTML = eventTableRowHTML + "<tr height='12px'><td height='12px'><div class='bullet'><ul><li>&nbsp;</li></ul></div></td><td>"+events[i].event.name+"</td></tr>";}
+			else
+			{
+ 			   if (events[i].event.entry_time)
+                           {var eventTableRowHTML = eventTableRowHTML + "</td><td style='padding-left:5px;'>"+events[i].event.name+"</td></tr>";}
+		 	   else
+ 			   {
+			     var eventTableRowHTML = eventTableRowHTML + "<tr><td><td style='padding-left:5px;'>"+events[i].event.name+"</td></tr>";
+    			   }
+			
+		       	} 
+
+                        }
+			var eventTableRowHTML = eventTableRowHTML + "</table></td></tr></tbody></table>";
+			$('schedule_<%= schedule.id.to_s %>').update(eventTableRowHTML);	
+		    }
+	    });		
+	    <% end %>
+    }
+
+
+    function adjustHours(str_time)
+    {
+        if (str_time.slice(0,1)=="0"){
+                var hours = str_time.slice(1,2);}
+        else{
+                var hours =  str_time.slice(0,2);
+        }
+        if (hours >=12)
+            var times = " PM";
+        else
+            var times = " AM";
+
+         // Convert an hours component of "0" to "12"
+        hours = ( hours == 12 ) ? 24 : hours;
+         // Convert the hours component to 12-hour format if needed
+        hours = ( hours > 12 ) ? hours - 12 : hours;
+
+    //   alert (hours);
+
+
+       return hours+str_time.slice(2,5)+times;
+
+    }
+
+
+    function getScheduleResponse(transport, json, schedule_id)
+    { 	
+
+    } 
+
+
+     
+    function is_array(obj) {
+       if (obj.constructor.toString().indexOf("Array") == -1)
+	  return false;
+       else
+	  return true;
+    }
+
+    function updateClock ( )
+    {
+	    var currentTime = new Date ();
+
+	    var d_names = new Array("Sun", "Mon", "Tue","Wed", "Thu", "Fri", "Sat");
+
+	    var m_names = new Array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+
+	    var currentMonth = currentTime.getMonth();
+	    var currentDay = currentTime.getDay();
+	    
+	    var currentYear = currentTime.getFullYear();
+	    var currentDate = currentTime.getDate();
+	    var currentHours = currentTime.getHours ( );
+	    var currentMinutes = currentTime.getMinutes ( );
+	    var currentSeconds = currentTime.getSeconds ( );
+	    
+	    // Pad the minutes and seconds with leading zeros, if required
+	    currentMinutes = ( currentMinutes < 10 ? "0" : "" ) + currentMinutes;
+	    currentSeconds = ( currentSeconds < 10 ? "0" : "" ) + currentSeconds;
+	    
+	    // Choose either "AM" or "PM" as appropriate
+	    var timeOfDay = ( currentHours < 12 ) ? "AM" : "PM";
+	     
+	    // Convert an hours component of "0" to "12"
+	    currentHours = ( currentHours == 12 ) ? 24 : currentHours;
+	    
+	    // Convert the hours component to 12-hour format if needed
+	    currentHours = ( currentHours > 12 ) ? currentHours - 12 : currentHours;
+	   
+	    // Compose the string for display
+	    var currentTimeString = d_names[currentDay]+" "+m_names[currentMonth]+" "+currentDate+" at "+currentHours + ":" + currentMinutes + ":" + currentSeconds + " "+ timeOfDay;
+	    
+	    // Update the time display
+	    $('clock').update(currentTimeString);
+    }
+
+    function exitBlackScreen(splash_div_id) {
+	    $(splash_div_id).style.display = 'none';
+    }
+
+    function pageRefresh() {
+             window.location = window.location.href;
+
+    }
+
+    function splashRefresh() {
+	    Element.hide('wrapper');
+<% time_check = 1 %>
+<% @display.venue.splash_ads.each do |splash_ad| %>
+<% if not splash_ad.playlist_start.nil? %>
+<% datestart = Date.strptime(splash_ad.playlist_start, "%d/%m/%Y") %>
+<% end %>
+<% if not splash_ad.playlist_end.nil? %>
+<% dateend = Date.strptime(splash_ad.playlist_end, "%d/%m/%Y") %>
+<% end %>
+<% if !datestart.nil? || !dateend.nil? %>
+<% if (Date.today >= datestart) && (Date.today <= dateend) %> 
+	    setTimeout("$(\'splash<%= splash_ad.id.to_s %>\').style.display = \'block\'", <%= time_check*1000 %>);
+	    setTimeout("exitBlackScreen(\'splash<%= splash_ad.id.to_s %>\');", <%= (splash_ad.time_interval+time_check)*1000 %>);
+	    <% time_check += splash_ad.time_interval %>
+<% end %>
+<% end %>
+<% end %> 
+	    
+	    setTimeout("Element.show(\'wrapper\');", <%= time_check*1000 %>);
+    }
+
+    document.observe('dom:loaded', function() {  
+	    //sendUpdateSchedules('','5',180);
+	    updateClock(); 
+	    setInterval('updateClock()', 1000 );
+<% if (@display.venue.time_interval > time_check) && !@display.venue.splash_ads.empty? %>
+	    setInterval('splashRefresh()', <%= @display.venue.time_interval*1000 %> );
+<% end %>
+<% unless @display.venue.splash_ads.empty? %>
+	    splashRefresh();
+<% end %>
+	    runUpdateSchedules();
+	    setInterval('runUpdateSchedules()', 60000 );
+
+            setInterval ('pageRefresh()', 1200000); // 10000 ->1sec
+         
+    });  
+
+  </script>
+
+</head>
+<body scroll="no">
+<% @display.venue.splash_ads.each do |splash_ad| %>
+<div id="splash<%= splash_ad.id.to_s %>" style="display: none;"><div align="center"><img src="/splash_ads/<%= splash_ad.id.to_s %>/<%= splash_ad.image_file %>" /></div></div>
+<% end %>
+<div id="wrapper">
+
+<div id="display_title">
+<% if @display.is_show %>
+	<h1><%= @display.name %></h1>
+<% end %>
+</div>
+<div id="weather">
+<% if @display.venue.weather_box.is_show %>
+	<!--iframe marginheight="0" marginwidth="0" name="wxButtonFrame" id="wxButtonFrame" height="85" src="http://btn.weather.ca/weatherbuttons/template5.php?placeCode=<%= @display.venue.weather_code.to_s %>&category0=Cities&containerWidth=234&btnNo=&backgroundColor=blue&multipleCity=0&citySearch=0&celsiusF=C" align="top" frameborder="0" width="<%= @display.venue.weather_box.width %>" scrolling="no"></iframe-->
+
+ 
+<!--div id="container">
+<form name = "searchform" id= "searchform" target="_blank" action="http://www.theweathernetwork.com/index.php" method="get">
+
+		<input type="hidden" name="ref" value="wxbtn234x60_search_city">
+		<input type="hidden" name="wbRef" value="">
+	<input type="hidden" name="link" value="search">
+<div class="fl"><img src="referer.gif?btnsite=&amp;switchto=c&amp;switchto=c&amp;refreshPage=63" width="1" height="1" /></div>
+<div id="left_col">
+        <div id="logo"><a href="http://www.theweathernetwork.com/?ref=wxbtn234x60_logo_home" target="blank"><img src="http://btn.weather.ca/weatherbuttons/234x60/logo.gif" alt="Logo" title="Logo" /></a></div>
+<div id="logo"><a href=""><img src="234x60/logo.gif" alt="Logo" title="Logo" /></a></div>-->
+
+        <!--div id = "warning_link">
+					<div id="btn_forecast"><a href="http://www.theweathernetwork.com/index.php?product=weather&placecode=cask0261&wbRef=&amp;link=cityPage&amp;switchto=c&amp;switchto=c&amp;ref=wxbtn234x60_image_city" target="_blank"><img src="http://btn.weather.ca/weatherbuttons/234x60/fullforecast.gif" alt="TWN" title="TWN" /></a></div>
+		</div>
+
+         <div id="btn_forecast"><a href=""><img src="234x60/fullforecast.gif" alt="TWN" title="TWN" /></a></div>-->
+        <!--<div id="btn_forecast"><a href=""><img src="/common/images/wxbuttons/btn_alert_23460.gif" alt="TWN" title="TWN" /></a></div>-->
+<!--/div>
+
+    <div id="right_col">
+		<a href="" id="nochange">
+			<div id="location"><a class="cityName" href="http://www.theweathernetwork.com/index.php?product=weather&placecode=cask0261&wbRef=&amp;link=cityPage&amp;switchto=c&amp;switchto=c&amp;ref=wxbtn234x60_text_city" target="_blank">
+					Regina, SK				</a></div-->
+        <!-- weather icon here -->
+
+	<iframe  marginheight="0" marginwidth="0" name="wxButtonFrame" id="wxButtonFrame"  src="http://btn.weather.ca/weatherbuttons/template5.php?placeCode=<%= @display.venue.weather_code.to_s %>&category0=Cities&containerWidth=234&btnNo=&backgroundColor=blue&multipleCity=0&citySearch=0&celsiusF=C" align="top" frameborder="0" width="254" scrolling="no" height="85" style="background-image:url(); margin-top:-10px;" ></iframe>
+      
+ 	<!--div id="icon"><a href="http://www.theweathernetwork.com/index.php?product=weather&placecode=cask0261&wbRef=&amp;link=cityPage&amp;switchto=c&amp;switchto=c&amp;ref=wxbtn234x60_image_city" target="_blank"><img src="http://btn.weather.ca/common/images/wicons/b.gif" alt="A" title="A" border="0" /></a></div>
+        <div id="temp"><a class="currentTemp" href="http://www.theweathernetwork.com/index.php?product=weather&placecode=cask0261&wbRef=&amp;link=cityPage&amp;switchto=c&amp;switchto=c&amp;ref=wxbtn234x60_text_city" target="_blank">-29<sup>&deg;c</sup></a><img src="http://btn.counter.weather.ca/counter.gif?btntype=234x60&btncity=Regina&btnsite=&btnlang=en"></div>
+        <div id="cond"><a class="cityName" href="http://www.theweathernetwork.com/index.php?product=weather&placecode=cask0261&wbRef=&amp;link=cityPage&amp;switchto=c&amp;switchto=c&amp;ref=wxbtn234x60_text_city" target="_blank">A few clouds</a></div-->
+		  <!--/a-->
+		<!--/div>
+
+
+	</form>
+
+</div-->
+
+<% end %>
+</div>
+<p>
+<p>
+<p>
+<p>
+<p>
+<p>
+<div id="clock"></div> 
+
+<div id="flashAdd">
+	<iframe src="/displays/<%= @display.id.to_s %>/frame" frameborder="0" width="249" height="549" scrolling="no" style="margin-top:-15px;"></iframe>
+</div>
+<div id="scheduleContainer">
+<br style="clear:both;" />	
+<% @display.venue.schedules.each do |schedule| %>
+	<% unless schedule.is_title %>
+	<div id="schedule_<%= schedule.id.to_s %>" class="scheduleBox<%= schedule.id.to_s %>">
+	</div>	
+	<% else %>
+	<div style="position:absolute; word-break:break-all; font-size:18px; padding:3px; text-align:left; float:left; width:<%= schedule.width %>px; height:<%= schedule.height %>px; top:<%= schedule.top %>px; left:<%= schedule.left %>px; background-color:<%= schedule.title_back_color %>; color:<%= schedule.title_color %>; overflow: hidden; ">
+	<%= schedule.name %>
+	</div>
+	<% end %>
+<% end %>
+
+<% if !@feed.nil? %>
+<!-- Twitter -->
+<div style="outline: 0px solid rgb(255, 0, 0);"  class="twitter"><table width="100%" cellspacing="0"><tbody><!--tr><th colspan="4">Twitter Updates Follow Us all Day</th></tr--><tr><td colspan="4"> <table>
+<%
+    #@rss.items.each do |item|
+    for feed in @feed.items
+%>
+     	<tr><td><%= feed.title %></td></tr>
+<%
+    end
+%>
+
+</table></td></tr></tbody></table></div>	
+<% end%>
+
+
+
+<br style="clear:both;" />
+</div>
+<br style="clear:both;" />
+</div>
+</body>
+</html>
+

@@ -1,0 +1,58 @@
+<p>
+  <b>Name:</b>
+  <%=h @schedule.name %>
+</p>
+
+<p>
+  <b>Is Title:</b>
+  <%=h @schedule.is_title %>
+</p>
+
+<p>
+  <b>Venue:</b>
+  <%=h @schedule.venue_id %>
+</p>
+
+<p>
+  <b>Top:</b>
+  <%=h @schedule.top %>
+</p>
+
+<p>
+  <b>Left:</b>
+  <%=h @schedule.left %>
+</p>
+
+<p>
+  <b>Width:</b>
+  <%=h @schedule.width %>
+</p>
+
+<p>
+  <b>Height:</b>
+  <%=h @schedule.height %>
+</p>
+
+<p>
+  <b>Title color:</b>
+  <%=h @schedule.title_color %>
+</p>
+
+<p>
+  <b>Title back color:</b>
+  <%=h @schedule.title_back_color %>
+</p>
+
+<p>
+  <b>Content color:</b>
+  <%=h @schedule.content_color %>
+</p>
+
+<p>
+  <b>Content back color:</b>
+  <%=h @schedule.content_back_color %>
+</p>
+
+
+<%= link_to 'Edit', edit_schedule_path(@schedule) %> |
+<%= link_to 'Back', '/venues/'+@schedule.venue_id.to_s %>

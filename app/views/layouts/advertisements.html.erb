@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>Advertisements: <%= controller.action_name %></title>
+  <%= stylesheet_link_tag 'scaffold' %>
+  <link rel="stylesheet" href="/style.css" type="text/css" />
+
+
+		<!-- firebug lite -->
+		<script type="text/javascript" src="/javascripts/firebug.js"></script>
+
+        <!-- jQuery -->
+
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+        
+        <!-- required plugins -->
+		<script type="text/javascript" src="/javascripts/date.js"></script>
+		<!--[if lt IE 7]><script type="text/javascript" src="scripts/jquery.bgiframe.min.js"></script><![endif]-->
+       
+        <!-- jquery.datePicker.js -->
+		<script type="text/javascript" src="/javascripts/jquery.datePicker.js"></script>
+
+        
+        <!-- datePicker required styles -->
+
+		<link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/datePicker.css">
+		
+        <!-- page specific styles -->
+		<link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/demo.css">
+        
+        <!-- page specific scripts -->
+		<script type="text/javascript" charset="utf-8">
+            $(function()
+            {
+				$('.date-pick').datePicker({autoFocusNextInput: true});
+            });
+		</script>
+
+
+</head>
+<body>
+  <img src="/images/small_logo.jpg" />
+
+  <div class="header">
+    <div style="margin-top: -70px;">
+	<a href="/users">User Admin</a> |
+	<%= link_to 'Log out', '/sessions/destroy' if session[:user_id] != nil %>
+    </div> 
+        <br><br>
+   	Copyright 2009. All rights reserved. 306-359-1547 | www.myvenue.ca | support@iksmedia.com 
+    </div>
+    <div class="menu">
+  	<%= link_to 'Venue', "/" %>
+    </div>
+    <div class="wrapper">
+	
+    <div class="content">
+
+
+   	<p style="color: green"><%= flash[:notice] %></p>
+
+	<%= yield %>
+    </div>
+    
+    <div class="footer">
+
+    </div>
+  </div>
+</body>
+</html>

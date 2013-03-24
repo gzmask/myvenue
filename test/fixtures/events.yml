@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  start_time: 2009-10-16 11:12:05
+  end_time: 2009-10-16 11:12:05
+  is_confirmed: false
+  entry_time: false
+  schedule_id: 1
+
+two:
+  name: MyString
+  start_time: 2009-10-16 11:12:05
+  end_time: 2009-10-16 11:12:05
+  is_confirmed: false
+  entry_time: false
+  schedule_id: 1

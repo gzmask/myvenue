@@ -1,0 +1,50 @@
+
+<div class="sub_menu">
+<%= link_to 'Back', '/venues/'+@display.venue_id.to_s %>
+</div>
+<h1>Editing display</h1>
+
+<% form_for(@display) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :is_show %><br />
+    <%= f.check_box :is_show %>
+  </p>
+  <p>
+    <%= f.label :top, 'Vertical Offset for Animation:' %><br />
+    <%= f.text_field :top, :default => 0 %>
+  </p>
+  <p>
+    <%= f.label :left, 'Horizontal Offset for Animation:' %><br />
+    <%= f.text_field :left, :default => 0 %>
+  </p>
+  <p>
+    <%= f.label :width, 'Display horizontal length in pixels:' %><br />
+    <%= f.text_field :width, :default => 1024 %>px
+  </p>
+  <p>
+    <%= f.label :height, 'Display vertial length in pixels:' %><br />
+    <%= f.text_field :height, :default => 768 %>px
+  </p>
+  <!--p>
+    <%= f.label :is_customize %><br />
+    <%= f.check_box :is_customize %>
+  </p>
+  <p>
+    <%= f.label :html %><br />
+    <%= f.text_area :html %>
+  </p>
+  <p>
+    <%= f.label :css %><br />
+    <%= f.text_area :css %>
+  </p-->
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+

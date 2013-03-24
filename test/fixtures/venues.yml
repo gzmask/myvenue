@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  weather_code: MyString
+  time_zone: 1
+  background_image: MyString
+
+two:
+  name: MyString
+  weather_code: MyString
+  time_zone: 1
+  background_image: MyString

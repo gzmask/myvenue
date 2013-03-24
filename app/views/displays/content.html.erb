@@ -1,0 +1,319 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>Displays: <%= @display.name %></title>
+  <%= javascript_include_tag 'prototype' %>
+  <style type="text/css"> 
+    html { margin:0px; padding:0px; }
+    body { margin:0px; background-color:#FFF; font-family:Arial, Helvetica, sans-serif; font-weight:bold; overflow: hidden; } 
+<% @display.venue.splash_ads.each do |splash_ad| %>
+	
+    #splash<%= splash_ad.id.to_s %> { height: 500px; width: 400px; background-color: #fff;margin-bottom:1000px; display:none;  }
+     #splash<%= splash_ad.id.to_s %> div img { height: 500px; width: 400px; background-color: #fff;margin-bottom:1000px;  }
+    
+<% end %>
+    #display_title { margin-left:10px; padding-top:20px; }
+    #display_title h1 { font-size:26px; color:#333333; }
+    #flashAdd 
+    { 
+    float:right; 
+    <% if @display.is_show %>
+    margin-top: <%=(-46 + @display.top).to_s if @display.top != nil %>px; 
+    <% else %>
+    margin-top: <%=(20 + @display.top).to_s if @display.top != nil %>px; 
+    <% end %>
+    margin-right:<%=(27 - @display.left).to_s if @display.left != nil %>px;   
+    }
+    table { border-collapse:collapse;  }
+    .time_td { border-right:solid 1px #000000; width:70px; }
+
+    #wrapper { margin:0px; width:400px; height:500px; }
+    #clock 
+    { position:absolute; 
+      top:5px; 
+      left:5px;  
+      width:300px;  
+      font-size:12px; 
+      color:#111; 
+      <% unless @display.venue.time_box.is_show %>
+      display: none;
+      <% end %>
+    }
+    #weather { position:absolute; background-color: transparent; top:<%= @display.venue.weather_box.top %>px; left:<%= @display.venue.weather_box.left %>px;  }
+
+ #weather a:link, a:visited, a:active { text-decoration:none; color:#003876; }
+ #weather a:hover { text-decoration:none; color:#2981da; }
+ #weather a#nochange:hover { color:#003876; }
+ #weather img { border: none; }
+#toprow { height: 58px; }
+
+#container {
+	color:#003876;
+	width:232px; min-height: 58px;
+	border: solid 1px #bfbfbf;
+	background: transparent url('http://btn.weather.ca/weatherbuttons/234x60/swirl.gif') no-repeat;
+  	margin-left:10px;
+}
+#left_col {	float:left; width: 65px; margin: 0px 4px 0px 0px; }
+	#logo { padding: 3px 0px 4px 2px;}
+	#btn_forecast { padding: 0px 0px 0px 2px;}
+#right_col { float:left; width:156px; margin: 0px 0px 0px 0px; }
+	#location { font:bold 13px "Century Gothic", Arial, Helvetica, sans-serif; }
+	#icon { float: left; width: 45px; }
+		#icon img { width: 45px; }
+	#temp {
+		float: left; padding: 5px 0px 0px 2px; width: auto;
+		font:21px "Century Gothic", Arial, Helvetica, sans-serif;
+	}
+		#temp sup { font-size: 15px; }
+	#cond {
+		float:left;
+		width:60px;
+		font:11px Arial, Helvetica, sans-serif; line-height: 12px;
+		padding:3px 0px 0px 5px;
+		margin-top:-40px;
+ 		margin-left:100px;
+	}
+
+.bullet ul
+{
+   float:left;
+   width: 10px;
+   margin:0px;
+   osition:relative;
+   height: 10px;
+}
+
+.bullet
+{
+  vertical-align:middle; 
+  height:10px;
+  float: left;
+  margin-top: 0px;
+}
+
+
+#bottom_row { clear: both; width:232px; overflow: auto; }
+	#ddmenu { float: left; width: 82px; padding: 4px 8px 2px 2px; }
+	#searchfld { float: left; width: 74px; padding: 4px 0px 2px; }
+		input.button, select.button {
+			border: #6c6c6c 1px solid;
+			font: 10px arial, helvetica, sans-serif;
+			vertical-align: middle;
+			letter-spacing: 1px; height: 16px; padding: 0px 0px 0px 2px;
+		}
+		input.button { width: 70px; }
+		select.button { width: 82px; }
+	#btn_search { float: left; width: 50px; padding: 4px 0px 0px; }
+		input.searchButton {
+			background: transparent url('http://btn.weather.ca/weatherbuttons/234x60/search_en.gif') no-repeat;
+			width: 50px; height: 16px;
+			border: none;
+			vertical-align: middle;
+		}
+		input.searchButton_fr {
+			background: transparent url('http://btn.weather.ca/weatherbuttons/234x60/search_fr.gif') no-repeat;
+			width: 50px; height: 16px;
+			border: none;
+			vertical-align: middle;
+		}
+.fl { float: left; }
+
+    #scheduleContainer { width:400px; margin-top:10px; float:left; padding-left:0px; border: 0px; }
+    #scheduleContainer img { width: 225px; Height: 77px;}
+<% @display.venue.schedules.each do |schedule| %>
+    .scheduleBox<%= schedule.id.to_s %> { font-size:<%= schedule.title_font_size if schedule.title_font_size != nil %>px; text-align:left; width:100%; border:solid <% if(schedule.is_border) %> 1px <% else %> 0px <%end%> #000000; float:left; word-break:break-all; overflow: hidden; }
+    .scheduleBox<%= schedule.id.to_s %> td { color:#7E7F68; background-color:<%= schedule.content_back_color %>; overflow: hidden; vertical-align:top; padding:3px; font-size:14px; }
+
+    .scheduleBox<%= schedule.id.to_s %> th { background-color:<%= schedule.title_back_color %>; overflow: hidden; font-size:14px;padding:3px; text-align:left; color:<%= schedule.title_color %>; }
+<% end %>
+
+  </style>
+  <script type="text/javascript">  
+    function runUpdateSchedules() {
+	    
+	    var currentTime = new Date();
+
+	    var timeStamp = currentTime.getTime();
+	    
+	    <% @display.venue.schedules.each do |schedule| %>
+	    var this_url = "/schedules/<%= schedule.id.to_s %>/events.json";
+	    new Ajax.Request(this_url,   
+	    {
+		    method:'post',     
+		    onSuccess: function(transport){
+			var events = transport.responseText.evalJSON(true);  
+			var eventTableRowHTML = "<table cellspacing='0' width='100%'><tbody><tr><th colspan=\"4\"><%= schedule.name %></th></tr>";
+
+
+
+			for(var i = 0; i < events.length; i++) {
+      /*                  if (events[i].event.entry_time)
+			{ var eventTableRowHTML = eventTableRowHTML + "<tr><td>Start Time</td>";}
+			else
+			{ var eventTableRowHTML = eventTableRowHTML + "<td></td>"; }
+
+			if (events[i].event.entry_end_time)
+			{ var eventTableRowHTML = eventTableRowHTML + "<td>End Time</td>";}
+			else
+			{ var eventTableRowHTML = eventTableRowHTML + "<td></td>"; }
+
+			var eventTableRowHTML = eventTableRowHTML + "<td>Event</td></tr>";
+*/
+	                if (events[i].event.entry_time)
+			{ var eventTableRowHTML = eventTableRowHTML + "<tr><td width='95px;'>"+events[i].event.start_time.slice(11,16);}
+			else
+			{ var eventTableRowHTML = eventTableRowHTML + " "; }
+
+			if (events[i].event.entry_end_time)
+			{ var eventTableRowHTML = eventTableRowHTML + "-"+events[i].event.end_time.slice(11,16);}
+			else
+			{ var eventTableRowHTML = eventTableRowHTML + " "; }
+
+			if (events[i].event.entry_bullets && !events[i].event.entry_time && !events[i].event.entry_end_time)
+			//if (events[i].event.entry_bullets)
+			{ var eventTableRowHTML = eventTableRowHTML + "<tr height='12px'><td height='12px' width='40px'><div class='bullet'><ul><li>&nbsp;</li></ul></div></td><td>"+events[i].event.name+"</td></tr>";}
+			else
+			{
+ 			   if (events[i].event.entry_time)
+                           {var eventTableRowHTML = eventTableRowHTML + "</td><td>"+events[i].event.name+"</td></tr>";}
+		 	   else
+ 			   {
+			     var eventTableRowHTML = eventTableRowHTML + "<tr><td><td>"+events[i].event.name+"</td></tr>";
+    			   }
+			
+		       	} 
+
+                        }
+			var eventTableRowHTML = eventTableRowHTML + "</tbody></table>";
+			$('schedule_<%= schedule.id.to_s %>').update(eventTableRowHTML);	
+		    }
+	    });		
+	    <% end %>
+    }
+
+    function getScheduleResponse(transport, json, schedule_id)
+    { 	
+
+    } 
+
+
+    
+    function is_array(obj) {
+       if (obj.constructor.toString().indexOf("Array") == -1)
+	  return false;
+       else
+	  return true;
+    }
+
+    function updateClock ( )
+    {
+	    var currentTime = new Date ();
+
+	    var d_names = new Array("Sun", "Mon", "Tue","Wed", "Thu", "Fri", "Sat");
+
+	    var m_names = new Array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+
+	    var currentMonth = currentTime.getMonth();
+	    var currentDay = currentTime.getDay();
+	    
+	    var currentYear = currentTime.getFullYear();
+	    var currentDate = currentTime.getDate();
+	    var currentHours = currentTime.getHours ( );
+	    var currentMinutes = currentTime.getMinutes ( );
+	    var currentSeconds = currentTime.getSeconds ( );
+	    
+	    // Pad the minutes and seconds with leading zeros, if required
+	    currentMinutes = ( currentMinutes < 10 ? "0" : "" ) + currentMinutes;
+	    currentSeconds = ( currentSeconds < 10 ? "0" : "" ) + currentSeconds;
+	    
+	    // Choose either "AM" or "PM" as appropriate
+	    var timeOfDay = ( currentHours < 12 ) ? "AM" : "PM";
+	    
+	    // Convert the hours component to 12-hour format if needed
+	    // currentHours = ( currentHours > 12 ) ? currentHours - 12 : currentHours;
+	    
+	    // Convert an hours component of "0" to "12"
+	    //currentHours = ( currentHours == 0 ) ? 12 : currentHours;
+	    
+	    // Compose the string for display
+	    var currentTimeString = d_names[currentDay]+" "+m_names[currentMonth]+" "+currentDate+" at "+currentHours + ":" + currentMinutes + ":" + currentSeconds + " ";//+ timeOfDay;
+	    
+	    // Update the time display
+	    $('clock').update(currentTimeString);
+    }
+
+    function exitBlackScreen(splash_div_id) {
+	    $(splash_div_id).style.display = 'none';
+    }
+
+    function splashRefresh() {
+	    Element.hide('wrapper');
+<% time_check = 1 %>
+<% @display.venue.splash_ads.each do |splash_ad| %>
+	    setTimeout("$(\'splash<%= splash_ad.id.to_s %>\').style.display = \'block\'", <%= time_check*1000 %>);
+	    setTimeout("exitBlackScreen(\'splash<%= splash_ad.id.to_s %>\');", <%= (splash_ad.time_interval+time_check)*1000 %>);
+	    <% time_check += splash_ad.time_interval %>
+<% end %> 
+	    
+	    setTimeout("Element.show(\'wrapper\');", <%= time_check*1000 %>);
+    }
+
+    document.observe('dom:loaded', function() {  
+	    updateClock(); 
+	    setInterval('updateClock()', 1000 );
+<% if (@display.venue.time_interval > time_check) && !@display.venue.splash_ads.empty? %>
+	    setInterval('splashRefresh()', <%= @display.venue.time_interval*1000 %> );
+<% end %>
+<% unless @display.venue.splash_ads.empty? %>
+	    splashRefresh();
+<% end %>
+	    runUpdateSchedules();
+	    setInterval('runUpdateSchedules()', 60000 );
+    });  
+
+  </script>
+
+</head>
+<body scroll="no">
+<% @display.venue.splash_ads.each do |splash_ad| %>
+<div id="splash<%= splash_ad.id.to_s %>" style="display: none;"><div align="center"><img src="/splash_ads/<%= splash_ad.id.to_s %>/<%= splash_ad.image_file %>" /></div></div>
+<% end %>
+<div id="wrapper">
+<!--div id="display_title">
+<% if @display.is_show %>
+	<h1><%= @display.name %></h1>
+<% end %>
+</div-->
+<div id="clock"></div>
+<!--div id="flashAdd">
+	<iframe src="/displays/<%= @display.id.to_s %>/frame" frameborder="0" width="249" height="549" scrolling="no" style="margin-top:-15px;"></iframe>
+</div-->
+<div id="scheduleContainer">
+<br style="clear:both;" />	
+<% @display.venue.schedules.each do |schedule| %>
+	<% unless schedule.is_title %>
+	<div id="schedule_<%= schedule.id.to_s %>" class="scheduleBox<%= schedule.id.to_s %>">
+	</div>	
+	<% else %>
+	<div style="position:absolute; word-break:break-all; font-size:18px; padding:3px; text-align:left; float:left; width:<%= schedule.width %>px; height:<%= schedule.height %>px; top:<%= schedule.top %>px; left:<%= schedule.left %>px; background-color:<%= schedule.title_back_color %>; color:<%= schedule.title_color %>; overflow: hidden; ">
+	<%= schedule.name %>
+	</div>
+	<% end %>
+<% end %>
+<% if params[:id]=="13" ||  params[:id]=="14" || params[:id]=="15" || params[:id]=="19" %>
+<div align="right">
+  <img src='/images/logo_sm.JPG' style="padding-top:15px;">
+</div>
+<% end %>
+<br style="clear:both;" />
+</div>
+<br style="clear:both;" />
+</div>
+
+</body>
+</html>
+

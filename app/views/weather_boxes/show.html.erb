@@ -1,0 +1,38 @@
+<p>
+  <b>Name:</b>
+  <%=h @weather_box.name %>
+</p>
+
+<p>
+  <b>City code:</b>
+  <%=h @weather_box.city_code %>
+</p>
+
+<p>
+  <b>Top:</b>
+  <%=h @weather_box.top %>
+</p>
+
+<p>
+  <b>Left:</b>
+  <%=h @weather_box.left %>
+</p>
+
+<p>
+  <b>Width:</b>
+  <%=h @weather_box.width %>
+</p>
+
+<p>
+  <b>Is show:</b>
+  <%=h @weather_box.is_show %>
+</p>
+
+<p>
+  <b>Venue:</b>
+  <%=h @weather_box.venue_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_weather_box_path(@weather_box) %> |
+<%= link_to 'Back', weather_boxes_path %>

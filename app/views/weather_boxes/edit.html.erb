@@ -1,0 +1,40 @@
+<h1>Editing weather_box</h1>
+
+<% form_for(@weather_box) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :city_code %><br />
+    <%= f.text_field :city_code %>
+  </p>
+  <p>
+    <%= f.label :top %><br />
+    <%= f.text_field :top %>
+  </p>
+  <p>
+    <%= f.label :left %><br />
+    <%= f.text_field :left %>
+  </p>
+  <p>
+    <%= f.label :width %><br />
+    <%= f.text_field :width %>
+  </p>
+  <p>
+    <%= f.label :is_show %><br />
+    <%= f.check_box :is_show %>
+  </p>
+  <p>
+    <%= f.label :venue_id %><br />
+    <%= f.text_field :venue_id %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @weather_box %> |
+<%= link_to 'Back', weather_boxes_path %>

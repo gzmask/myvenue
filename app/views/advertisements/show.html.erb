@@ -1,0 +1,53 @@
+<p>
+  <b>Name:</b>
+  <%=h @advertisement.name %>
+</p>
+
+<p>
+  <b>Flash file:</b>
+  <%=h @advertisement.flash_file %>
+</p>
+
+<p>
+  <b>Top:</b>
+  <%=h @advertisement.top %>
+</p>
+
+<p>
+  <b>Left:</b>
+  <%=h @advertisement.left %>
+</p>
+
+<p>
+  <b>Width:</b>
+  <%=h @advertisement.width %>
+</p>
+
+<p>
+  <b>Height:</b>
+  <%=h @advertisement.height %>
+</p>
+
+<p>
+  <b>Time interval:</b>
+  <%=h @advertisement.time_interval %>
+</p>
+
+<p>
+  <b>Playlist begin:</b>
+  <%=h @advertisement.playlist_begin %>
+</p>
+
+<p>
+  <b>Playlist finish:</b>
+  <%=h @advertisement.playlist_finish %>
+</p>
+
+
+<p>
+  <b>Venue:</b>
+  <%=h @advertisement.venue_id %>
+</p>
+
+<%= link_to 'Edit', edit_advertisement_path(@advertisement) %> |
+<%= link_to 'Back', '/venues/'+@advertisement.venue_id.to_s %>

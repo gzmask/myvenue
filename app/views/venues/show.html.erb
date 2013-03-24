@@ -1,0 +1,219 @@
+<div class="sub_menu">
+<% if session[:user_id] != nil && User.find(session[:user_id]).is_admin %>
+<%= link_to 'Add a splash Ad', '/splash_ads/new/'+@venue.id.to_s %> <%= " "%>
+<%= link_to 'Add a Animation', '/advertisements/new/'+@venue.id.to_s %> <%= " "%>
+<%= link_to 'Add a Schedule Box', '/schedules/new/'+@venue.id.to_s %><%= " "%>
+<% end %>
+<%= link_to 'Preview', @display %>
+
+</div>
+
+<h1>Venue Details</h1>
+<% if session[:user_id] != nil && User.find(session[:user_id]).is_admin %>
+<%= link_to 'Edit this Venue', edit_venue_path(@venue) %> 
+<% end %>
+<p>
+  <b>Name:</b>
+  <%=h @venue.name %>
+</p>
+
+<p>
+  <b>Weather Code:</b>
+  <%=h @venue.weather_code %>
+</p>
+
+<p>
+  <b>Time Zone:</b>
+  UTC <%=h @venue.time_zone %>
+</p>
+
+<p>
+  <b>Time Interval:</b>
+  <%=h @venue.time_interval %> seconds
+</p>
+
+<p>
+  <b>Background Image:</b>
+  <%= link_to @venue.background_image, '/venues/'+@venue.id.to_s+'/'+@venue.background_image %>
+</p>
+
+<p>
+  <b>Owner:</b>
+  <%=h @venue.user.name if @venue.user != nil %>
+</p>
+
+
+<h2>
+Splash Ads
+<% if User.find(session[:user_id]) %>
+<%= link_to image_tag("add.png", :border =>0), '/splash_ads/new/'+@venue.id.to_s %> 
+<% end %>
+</h2>
+<% if @splash_ads.count > 0 %>
+	<% if User.find(session[:user_id]) %>
+	<%= link_to 'Add a Splash Ad', '/splash_ads/new/'+@venue.id.to_s %> 
+	<% end %>
+
+	<table>
+	  <tr>
+	    <th>Name</th>
+	    <th>Image File</th>
+	    <th>Time Interval</th>
+	    <th>Width</th>
+	    <th>Height</th>
+	    <th>Venue</th>
+	  </tr>
+
+	<% @splash_ads.each do |splash_ad| %>
+	  <tr>
+	<% if User.find(session[:user_id]) %>
+	    <td><%= link_to splash_ad.name, edit_splash_ad_path(splash_ad) %></td>
+	<% else %>
+	    <td><%=h splash_ad.name %></td>
+	<% end %>
+	    <td><%= link_to splash_ad.image_file, '/splash_ads/'+splash_ad.id.to_s+'/'+splash_ad.image_file %></td>
+	    <td><%=h splash_ad.time_interval %></td>
+	    <td><%=h splash_ad.width %></td>
+	    <td><%=h splash_ad.height %></td>
+	    <td><%=h splash_ad.venue_id %></td>
+	    <td class="edit_control"><%= link_to 'Edit', edit_splash_ad_path(splash_ad) %></td>
+	    <td class="del_control"><%= link_to image_tag("/images/remove.png", :border =>0), splash_ad, :confirm => 'Are you sure?', :method => :delete %></td>
+	    <!--td class="edit_control"></td>
+	    <td class="del_control"></td-->
+	  </tr>
+	<% end %>
+	</table>
+<% end %>
+
+<h2>
+Advertisements
+<!--% if User.find(session[:user_id]).is_admin %-->
+<% if User.find(session[:user_id]) %>
+<!--%= link_to image_tag("add.png", :border =>0), '/advertisements/new/'+@venue.id.to_s %-->
+<%= link_to image_tag("add.png", :border =>0), '/advertisements/new/'+@venue.id.to_s %> 
+<% end %>
+</h2>
+<% if @advertisements.count > 0 %>
+	<!--% if User.find(session[:user_id]).is_admin %-->
+	<% if User.find(session[:user_id]) %>
+	<!--%= link_to 'Add an Animation', '/advertisements/new/'+@venue.id.to_s %--> 
+	<%= link_to 'Add an Advertisement', '/advertisements/new/'+@venue.id.to_s %>
+	<% end %>
+
+	<table>
+	  <tr>
+	    <th>Name</th>
+	    <th>Flash File</th>
+	    <th>Time Interval</th>
+	    <th>Venue</th>
+	  </tr>
+
+	<% @advertisements.each do |advertisement| %>
+	  <tr>
+	<!--% if User.find(session[:user_id]).is_admin %-->
+        <% if User.find(session[:user_id]) %>
+	    <td><%= link_to advertisement.name, edit_advertisement_path(advertisement) %></td>
+	<% else %>
+	    <td><%=h advertisement.name %></td>
+	<% end %>
+	    <td><%= link_to  advertisement.flash_file, '/advertisements/'+advertisement.id.to_s+'/'+advertisement.flash_file %></td>
+	    <td><%=h advertisement.time_interval %></td>
+	    <td><%=h advertisement.venue_id %></td>
+	<!--% if User.find(session[:user_id]).is_admin %-->
+        <% if User.find(session[:user_id]) %>
+	    <td class="edit_control"><%= link_to 'Edit', edit_advertisement_path(advertisement) %></td>
+	    <td class="del_control"><%= link_to image_tag("/images/remove.png", :border =>0), advertisement, :confirm => 'Are you sure?', :method => :delete %></td>
+	<% else %>
+	    <td class="edit_control"></td>
+	    <td class="del_control"></td>
+	<% end %>
+	  </tr>
+	<% end %>
+	</table>
+	<% if User.find(session[:user_id]).is_admin %>
+		<% form_for(@display) do |f| %>
+		  <p>
+		    <%= f.label :top, 'Vertical Offset for Advertisements:' %><br />
+		    <%= f.text_field :top, :default => 0 %>(Ex: -1 for 1 pixel up)
+		  </p>
+		  <p>
+		    <%= f.label :left, 'Horizontal Offset for Advertisements:' %><br />
+		    <%= f.text_field :left, :default => 0 %>(Ex: -1 for 1 pixel left)
+		  </p>
+		  <p>
+		    <%= f.submit 'Change Offset'%>
+		  </p>
+		<% end %>
+	<% end %>
+<% end %>
+
+<h2>
+Schedules
+<% if User.find(session[:user_id]).is_admin %>
+<%= link_to image_tag("add.png", :border => 0), '/schedules/new/'+@venue.id.to_s %> 
+<% end %>
+</h2>
+<% if @schedules.count > 0 %>
+	<% if User.find(session[:user_id]).is_admin %>
+	<%= link_to 'Add an Schedule Box', '/schedules/new/'+@venue.id.to_s %> 
+	<% end %>
+
+	<table class="schedule_tb">
+	  <tr>
+	    <th>Name</th>
+	    <th>Title</th>
+	    <th>Top</th>
+	    <th>Left</th>
+	    <th>Width</th>
+	    <th>Height</th>
+	  </tr>
+
+	<% @schedules.each do |schedule| %>
+	  <tr>
+	<% if User.find(session[:user_id]).is_admin %>
+	    <td><%= link_to schedule.name, edit_schedule_path(schedule) %></td>
+	<% elsif User.find(session[:user_id]).is_client %>
+	    <td><%= link_to schedule.name, edit_schedule_path(schedule) %></td>
+	<% else %>
+	    <td><%=h schedule.name %></td>
+	<% end %>
+	    <td><%=h 'title' if schedule.is_title %></td>
+	    <td><%=h schedule.top %></td>
+	    <td><%=h schedule.left %></td>
+	    <td><%=h schedule.width %></td>
+	    <td><%=h schedule.height %></td>
+	    <td class="event_control"><%= link_to 'Add an Event', '/events/new/'+schedule.id.to_s %></td>
+	<% if User.find(session[:user_id]).is_admin %>
+	    <td class="edit_control"><%= link_to 'Edit', edit_schedule_path(schedule) %></td>
+	    <td class="del_control"><%= link_to image_tag("/images/remove.png", :border =>0), schedule, :confirm => 'Are you sure?', :method => :delete %></td>
+	<% else %>
+	    <td class="edit_control"></td>
+	    <td class="del_control"></td>
+	<% end %>
+	  </tr>
+	<% end %>
+	</table>
+<% end %>
+
+<br />
+
+<h2>Listing displays</h2>
+
+<table class="display_tb">
+  <tr>
+    <th>Name</th>
+    <th>Show Title</th>
+  </tr>
+
+  <tr>
+    <td><%= link_to @display.name, edit_display_path(@display) %></td>
+    <td><%=h @display.is_show %></td>
+    <td class="preview_control"><%= link_to 'Preview', @display %></td>
+    <td class="edit_control"><%= link_to 'Edit', edit_display_path(@display) %></td>
+    <td class="del_control"></td>
+  </tr>
+</table>
+
+<br />
+
+

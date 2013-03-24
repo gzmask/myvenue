@@ -1,0 +1,119 @@
+
+<div class="sub_menu">
+<%= link_to 'Back', '/venues/'+@schedule.venue_id.to_s %>
+</div>
+<h1>Editing schedule</h1>
+
+<% form_for(@schedule) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :row_limit %><br />
+    <%= f.text_field :row_limit %>
+  </p>
+  <p>
+    <%= f.label :top, 'distant to the top:(pixel)' %><br />
+    <%= f.text_field :top %>
+  </p>
+  <p>
+    <%= f.label :left, 'distant to the left:(pixel)' %><br />
+    <%= f.text_field :left %>
+  </p>
+  <p>
+    <%= f.label :width %><br />
+    <%= f.text_field :width %>
+  </p>
+  <p>
+    <%= f.label :height %><br />
+    <%= f.text_field :height %>
+  </p>
+  <p>
+    <%= f.label :title_font_size, 'Text size for title:' %><br />
+    <%= f.text_field :title_font_size %>px
+  </p>
+  <p>
+    <%= f.label :title_color, 'Text color for title:' %><br />
+    <%= f.text_field :title_color %>(e.g #ffffff)
+  </p>
+  <p>
+    <%= f.label :title_back_color, 'Background color for title:' %><br />
+    <%= f.text_field :title_back_color %>(e.g #000000)
+  </p>
+  <p>
+    <%= f.label :content_font_size, 'Text size for content:' %><br />
+    <%= f.text_field :content_font_size %>px
+  </p>
+  <p>
+    <%= f.label :content_color, 'Text color for content:' %><br />
+    <%= f.text_field :content_color %>(e.g #000000)
+  </p>
+  <p>
+    <%= f.label :content_back_color, 'Background color for content:' %><br />
+    <%= f.text_field :content_back_color %>(e.g #ffffff)
+  </p>
+  <p>
+    <%= f.label :is_title, 'Title Box' %><br />
+    <%= f.check_box :is_title %>
+  </p>
+  <p>
+    <%= f.label :is_border, 'Border' %><br />
+    <%= f.check_box :is_border %>(check if this is a border box)
+  </p>
+
+
+  <p>
+<% if User.find(session[:user_id]).is_admin %>
+    <%= f.submit 'Update' %>
+<% end %>
+  </p>
+<% end %>
+
+
+
+<h1>Events</h1>
+
+<%= link_to 'Add an Event', '/events/new/'+@schedule.id.to_s %> 
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Start Time</th>
+    <th>End Time</th>
+    <th>Effective Date</th>
+    <th>Recurrence</th>
+    <th>Entry Time</th>
+    <th>Entry End Time</th>
+    <th>Entry Bullets</th> 
+ </tr>
+
+<% @schedule.events.each do |event| %>
+  <tr>
+    <td><%= link_to event.name, edit_event_path(event) %></td>
+    <td><%=h event.start_time.strftime("%H:%M") %></td>
+    <td><%=h event.end_time.strftime("%H:%M") %></td>
+    <td><%=h event.effective_date %></td>
+    <% if event.recurrence == 0 %>
+      <td>Once</td>
+    <% elsif event.recurrence == 1 %>
+      <td>Daily</td>
+    <% elsif event.recurrence == 2 %>
+      <td>Weekly</td>
+    <% elsif event.recurrence == 3 %>
+      <td>Monthly</td>
+    <% else %>
+      <td></td>
+    <% end %>
+    <td><%=h event.entry_time %></td>
+    <td><%=h event.entry_end_time %></td>
+    <td><%=h event.entry_bullets %></td>
+    <td class="edit_control"><%= link_to 'Edit', edit_event_path(event) %></td>
+    <td class="del_control"><%= link_to 'Delete', event, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+
