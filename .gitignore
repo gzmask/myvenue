@@ -3,3 +3,4 @@ log
 public/splash_ads
 public/advertisements
 public/venues
+db/production.sqlite3
