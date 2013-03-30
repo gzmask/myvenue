@@ -1,6 +1,6 @@
-tmp
-log
-public/splash_ads
-public/advertisements
-public/venues
+tmp/*
+log/*
+public/splash_ads/*
+public/advertisements/*
+public/venues/*
 db/production.sqlite3
