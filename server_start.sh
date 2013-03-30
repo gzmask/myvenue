@@ -1,1 +1,1 @@
-mongrel_rails start -e production -p 80&
+thin start -e production -p 80&
