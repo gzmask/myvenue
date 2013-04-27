@@ -37,9 +37,7 @@
   </p>
   <p>
     <%= f.label :user_id, 'Owner Client' %><br />
-    <% # f.text_field :user_id, {'value' => session[:user_id].to_s, 'disabled' => 'disabled'} %>
-    <%#= select("venue", "user_id", @users.collect {|p| [p.name, p.id]}, {:default => session[:user_id]} ) %>
-  <%= select("venue", "user_id", User.all.collect {|p| [p.name, p.id]}, {:default => session[:user_id]} ) %>
+    <%= select("venue", "user_id", User.all.collect {|p| [p.name, p.id]}, {:default => session[:user_id]} ) %>
  </p>
 
   <h2>Display:</h2>
