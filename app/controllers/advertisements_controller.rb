@@ -53,20 +53,20 @@ class AdvertisementsController < ApplicationController
   # POST /advertisements.xml
   def create
     @advertisement = Advertisement.new(params[:advertisement])
-    flash_file = @advertisement.flash_file
-    @advertisement.flash_file = flash_file.original_filename if flash_file != nil
+    #flash_file = @advertisement.flash_file
+    #@advertisement.flash_file = flash_file.original_filename if flash_file != nil
     @advertisement.venue_id = params[:venue_id]
 
     respond_to do |format|
       if @advertisement.save
 	advertisement_id = @advertisement.id
-        flash_file_path= Rails.root.join('public', 'advertisements', advertisement_id.to_s)
-	Dir.mkdir(flash_file_path) unless File.directory? flash_file_path
-	if flash_file != nil
-	  File.open(Rails.root.join('public', 'advertisements', advertisement_id.to_s, flash_file.original_filename), 'wb') do |file|
-	    file.write(flash_file.read)
-	  end
-	end
+        #flash_file_path= Rails.root.join('public', 'advertisements', advertisement_id.to_s)
+	#Dir.mkdir(flash_file_path) unless File.directory? flash_file_path
+	#if flash_file != nil
+	#  File.open(Rails.root.join('public', 'advertisements', advertisement_id.to_s, flash_file.original_filename), 'wb') do |file|
+	#    file.write(flash_file.read)
+	#  end
+	#end
         flash[:notice] = 'Advertisement was successfully created.'
         format.html { redirect_to(@advertisement) }
         format.xml  { render :xml => @advertisement, :status => :created, :location => @advertisement }
@@ -106,7 +106,7 @@ class AdvertisementsController < ApplicationController
 	    #flash_file_path = Rails.root.join('public', 'advertisements', @advertisement.id.to_s)
 	    #File.delete(File.join(flash_file_path, @advertisement.flash_file)) if File.exist?(File.join(flash_file_path, @advertisement.flash_file))
 	    #Dir.rmdir(flash_file_path)
-	    @advertisement.del_file
+	    #@advertisement.del_file
 	    @advertisement.destroy
 
 	    respond_to do |format|

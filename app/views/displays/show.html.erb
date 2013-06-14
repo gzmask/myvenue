@@ -386,9 +386,12 @@
 <p>
 <div id="clock"></div> 
 
-<div id="flashAdd">
-	<iframe src="/displays/<%= @display.id.to_s %>/frame" frameborder="0" width="249" height="549" scrolling="no" style="margin-top:-15px;"></iframe>
+<div id="youtube_ad"><!--need youtube embedding -->
+  <iframe width="640" height="360" src="http://www.youtube-nocookie.com/embed/videoseries?list=PL0E34F5354AA5952E&autoplay=1" frameborder="0" allowfullscreen></iframe>
 </div>
+<!--div id="flashAdd">
+	<iframe src="/displays/<%= @display.id.to_s %>/frame" frameborder="0" width="249" height="549" scrolling="no" style="margin-top:-15px;"></iframe>
+</div-->
 <div id="scheduleContainer">
 <br style="clear:both;" />	
 <% @display.venue.schedules.each do |schedule| %>

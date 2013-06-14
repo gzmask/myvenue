@@ -36,10 +36,6 @@ class DisplaysController < ApplicationController
 		format.html { render :layout => false }                #by arthur
 		format.xml  { render :xml => @rss_results }            #by arthur
 	end 							       #by arthur 
-##by arthur    respond_to do |format|
-##by arthur      format.html { render :layout => false } # show.html.erb
-##by arthur      format.xml  { render :xml => @display }
-##by arthur    end
   end
 
   def content 
