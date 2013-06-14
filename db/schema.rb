@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130323163000) do
+ActiveRecord::Schema.define(:version => 20130614173258) do
 
   create_table "advertisements", :force => true do |t|
     t.string   "name"
@@ -24,6 +24,8 @@ ActiveRecord::Schema.define(:version => 20130323163000) do
     t.datetime "updated_at"
     t.string   "playlist_begin"
     t.string   "playlist_finish"
+    t.string   "youtube_url"
+    t.boolean  "is_youtube"
   end
 
   create_table "displays", :force => true do |t|
