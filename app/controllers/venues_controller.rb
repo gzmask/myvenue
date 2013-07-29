@@ -45,7 +45,6 @@ class VenuesController < ApplicationController
     if session[:user_id] == nil
         redirect_to "/login"
     else
-	 
 	    @venue = Venue.new if User.find(session[:user_id]).is_admin
 	    @venue.display = Display.new
 	    @venue.time_box = TimeBox.new
@@ -76,28 +75,29 @@ class VenuesController < ApplicationController
     if session[:user_id] == nil
         redirect_to "/login"
     else
- 
 	    @venue = Venue.new(params[:venue]) if User.find(session[:user_id]).is_admin
 	    background_image = params[:venue][:background_image]
 	    @venue.background_image = background_image.original_filename if background_image != nil
+        @venue.display.top = 0;
+        @venue.display.left = 0;
 	    #@venue.user_id = session[:user_id]
 
 	    respond_to do |format|
-	      if @venue.save
-		background_image_path = Rails.root.join('public', 'venues', @venue.id.to_s)
-		Dir.mkdir(background_image_path) unless File.directory? background_image_path
-		if background_image != nil
-		  File.open(Rails.root.join('public', 'venues', @venue.id.to_s, background_image.original_filename), 'wb') do |file|
-		    file.write(background_image.read)
-		  end
-		end
-		flash[:notice] = 'Venue was successfully created.'
-		format.html { redirect_to(@venue) }
-		format.xml  { render :xml => @venue, :status => :created, :location => @venue }
-	      else
-		format.html { render :action => "new" }
-		format.xml  { render :xml => @venue.errors, :status => :unprocessable_entity }
-	      end
+            if @venue.save
+                background_image_path = Rails.root.join('public', 'venues', @venue.id.to_s)
+                Dir.mkdir(background_image_path) unless File.directory? background_image_path
+                if background_image != nil
+                  File.open(Rails.root.join('public', 'venues', @venue.id.to_s, background_image.original_filename), 'wb') do |file|
+                    file.write(background_image.read)
+                  end
+                end
+                flash[:notice] = 'Venue was successfully created.'
+                format.html { redirect_to(@venue) }
+                format.xml  { render :xml => @venue, :status => :created, :location => @venue }
+            else
+                format.html { render :action => "new" }
+                format.xml  { render :xml => @venue.errors, :status => :unprocessable_entity }
+            end
 	    end
     end
   end
