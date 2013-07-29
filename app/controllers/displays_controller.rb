@@ -2,7 +2,7 @@ class DisplaysController < ApplicationController
   # GET /displays
   # GET /displays.xml
   require 'rss'
-  require 'feed_tools'
+  #require 'feed_tools'
 
   def index
     @displays = Display.all
@@ -18,11 +18,11 @@ class DisplaysController < ApplicationController
   def show
     @display = Display.find(params[:id])
     #@rss = RSS::Parser.parse(open('http://www.facebook.com/feeds/page.php?format=atom10&id=216503310211').read, false)
-    @venue = Venue.find(@display.venue_id)    
+    #@venue = Venue.find(@display.venue_id)    
 
-    if !@venue.twitter.nil? && !@venue.twitter.empty? 
-       @feed = FeedTools::Feed.open(@venue.twitter)
-    end
+    #if !@venue.twitter.nil? && !@venue.twitter.empty? 
+    #   @feed = FeedTools::Feed.open(@venue.twitter)
+    #end
 
 	#create an new array and push all events into it for rss usage #by arthur
 	@rss_results = Array.new                                       #by arthur
