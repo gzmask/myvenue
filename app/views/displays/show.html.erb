@@ -402,6 +402,19 @@
 	<% end %>
 <% end %>
 
+<% if (!@feed.nil?) && (@feed.items.count > 1) %>
+  <div style="outline: 0px solid rgb(255, 0, 0);"  class="twitter">
+    <table width="100%" cellspacing="0">
+      <tbody><tr><td colspan="4"> 
+          <table>
+            <% for feed in @feed.items %>
+              <tr><td><%= feed.title %></td></tr> 
+            <% end %> 
+          </table> 
+    </td></tr></tbody></table>
+  </div>  
+<% end%>
+
 <br style="clear:both;" />
 </div>
 <br style="clear:both;" />
